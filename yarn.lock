@@ -2890,6 +2890,13 @@
     "@types/keygrip" "*"
     "@types/node" "*"
 
+"@types/csurf@^1.11.0":
+  version "1.11.0"
+  resolved "https://registry.yarnpkg.com/@types/csurf/-/csurf-1.11.0.tgz#2809e89f55f12a2df8cd2826c06dfd66600dd14d"
+  integrity sha512-IwqGRWImcbIdwumGprYR0EgIZ7GAklOIGaNqe2u7jb0YUilg7yrrxXth11VA/AJK8wQWYHxTQagkCE75oaoBvQ==
+  dependencies:
+    "@types/express-serve-static-core" "*"
+
 "@types/dotenv@^8.2.0":
   version "8.2.0"
   resolved "https://registry.yarnpkg.com/@types/dotenv/-/dotenv-8.2.0.tgz#5cd64710c3c98e82d9d15844375a33bf1b45d053"

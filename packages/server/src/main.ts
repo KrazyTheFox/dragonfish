@@ -20,7 +20,11 @@ async function bootstrap() {
   app.use(cookieParser());
   app.use(json({limit: '50mb'}));
   app.use(urlencoded({limit: '50mb', extended: true}));
-  app.use(csurf());
+  app.use(csurf({cookie: true}));
+  app.use(function (req, res, next) {
+    res.cookie('XSRF-TOKEN', req.csrfToken());
+    return next();
+  });
   app.use(require('prerender-node').set('prerenderToken', process.env.PRERENDER_TOKEN));
   const port = process.env.PORT || 3333;
   await app.listen(port, () => {
