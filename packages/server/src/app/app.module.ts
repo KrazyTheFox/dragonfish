@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { join } from 'path';
 
 import { AppRoutingModule } from './app-routing.module';
 
