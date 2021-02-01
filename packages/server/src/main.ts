@@ -4,6 +4,7 @@ import { config, DotenvConfigOutput } from 'dotenv';
 import * as cookieParser from 'cookie-parser';
 import { json, urlencoded } from 'body-parser';
 import * as csurf from 'csurf';
+import * as helmet from 'helmet';
 
 import { AppModule } from './app/app.module';
 
@@ -25,6 +26,7 @@ async function bootstrap() {
     res.cookie('XSRF-TOKEN', req.csrfToken()); // this is to make sure the XSRF-TOKEN is being set correctly
     return next();
   });
+  app.use(helmet());
   app.use(require('prerender-node').set('prerenderToken', process.env.PRERENDER_TOKEN));
   const port = process.env.PORT || 3333;
   await app.listen(port, () => {
