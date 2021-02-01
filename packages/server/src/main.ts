@@ -16,7 +16,24 @@ if (results.error) {
   console.log(`You don't have a .env file set up! Are you sure the environment variables are configured?`);
 }
 
-async function bootstrap() {
+/**
+ * Determines whether we're in a local, test, or production environment based on
+ * DEV_ENV stored in environment variables.
+ */
+async function determineEnv(): Promise<string> {
+    if (process.env.DEV_ENV === 'local') {
+        return `http://localhost:4200/`
+    } else if (process.env.DEV_ENV === 'staging') {
+        return process.env.STAGING_ORIGIN;
+    } else if (process.env.DEV_ENV === 'production') {
+        return process.env.PRODUCTION_ORIGIN;
+    }
+}
+
+/**
+ * Bootstraps the web server.
+ */
+async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule);
   app.use(cookieParser());
   app.use(json({limit: '50mb'}));
@@ -27,6 +44,7 @@ async function bootstrap() {
     return next();
   });
   app.use(helmet());
+  app.enableCors({origin: await determineEnv(), credentials: true});
   app.use(require('prerender-node').set('prerenderToken', process.env.PRERENDER_TOKEN));
   const port = process.env.PORT || 3333;
   await app.listen(port, () => {
